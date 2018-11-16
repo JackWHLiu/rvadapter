@@ -34,7 +34,7 @@ public abstract class BaseRVAdapter<BEAN> extends RecyclerView.Adapter<BaseRVAda
     /**
      * 数据。
      */
-    private ArrayList<BEAN> mDatas;
+    private volatile ArrayList<BEAN> mDatas;
 
     /**
      * 上下文。
@@ -275,6 +275,11 @@ public abstract class BaseRVAdapter<BEAN> extends RecyclerView.Adapter<BaseRVAda
         mDatas.add(data);
         int position = mDatas.size() - 1;
         notifyItemInserted(position);
+    }
+
+    public void addItem(BEAN data, int index) {
+        mDatas.add(index, data);
+        notifyItemChanged(index);
     }
 
     public void addItems(List<BEAN> datas) {
